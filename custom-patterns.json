@@ -10,13 +10,50 @@
     "betOn": "player"
   },
   {
-    "name": "Short Custom Sequence",
+    "name": "Custom Fibbonaci slower",
+    "type": "Fibbonaci",
+    "params": {
+      "baseBet": 5,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000
+  },
+  {
+    "name": "Custom Fibbonaci slow",
+    "type": "Fibbonaci",
+    "params": {
+      "baseBet": 5,
+      "lossProgression": [1, 2, 4, 6, 10, 16, 26, 42, 68, 110, 178, 288, 466, 754, 1220, 1974, 3194],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000
+  },
+
+  {
+    "name": "Custom Fibbonaci 10 slower",
     "type": "custom_sequence",
     "params": {
       "baseBet": 10,
-      "lossProgression": [1, 2, 4, 2, 1],
-      "winReset": true,
-      "repeatLastOnMaxLoss": true
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000
+  },
+  {
+    "name": "Custom Fibbonaci 10 slow",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 10,
+      "lossProgression": [1, 2, 4, 6, 10, 16, 26, 42, 68, 110, 178, 288, 466, 754, 1220, 1974, 3194],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false
     },
     "startingBankroll": 26000,
     "numGames": 5000
