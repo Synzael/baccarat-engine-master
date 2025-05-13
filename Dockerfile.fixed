@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy just package files first
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Now copy the rest of the application
+COPY . .
+
+# Make sure we have the shuffle-array dependency 
+RUN npm list shuffle-array || npm install shuffle-array
+
+# Command to run when container starts
+ENTRYPOINT ["node", "--no-warnings"]
+CMD ["test-betting-patterns.js"] 
