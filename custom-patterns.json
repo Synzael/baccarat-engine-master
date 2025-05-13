@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Aggressive Martingale (Custom)",
+    "type": "martingale",
+    "params": {
+      "baseBet": 25
+    },
+    "startingBankroll": 26000,
+    "numGames": 1000,
+    "betOn": "player"
+  },
+  {
+    "name": "Short Custom Sequence",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 10,
+      "lossProgression": [1, 2, 4, 2, 1],
+      "winReset": true,
+      "repeatLastOnMaxLoss": true
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000
+  },
+  {
+    "name": "Custom Labouchère",
+    "type": "labouchere",
+    "params": {
+        "baseBet": 5,
+        "initialSequence": [1,1,2,2,3,3]
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": "banker"
+  },
+  {
+    "name": "Gentle D'Alembert (Custom)",
+    "type": "dalembert",
+    "params": {
+      "baseBet": 2
+    },
+    "startingBankroll": 10000,
+    "numGames": 5000
+  }
+]
