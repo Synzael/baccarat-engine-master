@@ -1,0 +1,172 @@
+
+[
+  {
+    "name": "Custom Fibbonaci 5 PBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 5,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "player", "banker", "banker"]
+  },
+  {
+    "name": "Custom Fibbonaci 5 BPBPPP slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 5,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker", "banker", "player", "player"] 
+  },
+
+
+  
+  {
+    "name": "Custom Fibbonaci 10 PBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 10,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "player", "banker", "banker"]
+  },
+    {
+    "name": "Custom Fibbonaci 10 BPBBPP slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 10,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker", "banker", "player", "player"] 
+  },
+
+
+  {
+    "name": "Custom Fibbonaci 50 PBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 50,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "player", "banker", "banker"]
+  },
+    {
+    "name": "Custom Fibbonaci 50 BPBPPP slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 50,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker", "banker", "player", "player"] 
+  },
+
+
+  
+  {
+    "name": "Custom Fibbonaci 100 PBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 100,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "player", "banker", "banker"]
+  },
+    {
+    "name": "Custom Fibbonaci 100 BPBBPP slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 100,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker", "banker", "player", "player"] 
+  },
+
+ 
+  {
+    "name": "Custom Fibbonaci 500 PBPBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 500,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 46000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "banker", "player", "player", "banker", "banker"]
+  },
+    {
+    "name": "Custom Fibbonaci 500 PBPFBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 500,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 46000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker",  "player", "banker", "banker", "player", "player"]
+  },
+  
+  
+  {
+    "name": "Custom Fibbonaci 50 PBPBPP-BB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 50,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn": ["player", "banker", "player", "banker", "player", "player", "banker", "banker"]
+  },
+    {
+    "name": "Custom Fibbonaci 50 PBPBPPBB slower",
+    "type": "custom_sequence",
+    "params": {
+      "baseBet": 50,
+      "lossProgression": [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 134, 223, 357, 580, 937, 1517, 2454],
+      "behavior": "fibonacci_step",
+      "repeatLastOnMaxLoss": false 
+    },
+    "startingBankroll": 26000,
+    "numGames": 5000,
+    "betOn":   [ "banker", "player", "banker",  "player", "banker", "banker", "player", "player"]
+  }
+  
+]

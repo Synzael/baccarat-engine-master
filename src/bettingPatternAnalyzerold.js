@@ -1,4 +1,3 @@
-// src/bettingPatternAnalyzer.js
 'use strict';
 
 class BettingPatternAnalyzer {
@@ -57,12 +56,9 @@ class BettingPatternAnalyzer {
     
     let bankroll = startingBankroll;
     this.results.startingBankroll = startingBankroll;
-    this.results.maxBankroll = startingBankroll; // Initialize High Water Mark for reporting and logic
+    this.results.maxBankroll = startingBankroll;
     this.results.minBankroll = startingBankroll;
     
-    // This is the "starting bankroll" amount used for the stop-loss rule quantum.
-    const maxAllowedDrawdownQuantum = startingBankroll; 
-
     let betState = {
       consecutiveWins: 0,
       consecutiveLosses: 0,
@@ -85,44 +81,16 @@ class BettingPatternAnalyzer {
         this.results.largestBet = betAmount;
       }
 
-      // Original check for invalid bet amount (e.g. strategy returns 0 or negative)
-      if (betAmount <= 0) {
-        // console.log(`Strategy returned invalid bet amount: $${betAmount.toFixed(2)}. Stopping simulation.`);
+      if (betAmount <= 0 || betAmount > bankroll) {
+        if (betAmount > bankroll && bankroll > 0) { // Only log actual bust if not already at 0 bankroll
+            // console.log(`Bankrupt or cannot afford bet: Bankroll $${bankroll.toFixed(2)}, Bet $${betAmount.toFixed(2)}`);
+        }
         break; 
       }
 
-      // START: New Stop-Loss Logic
-      const currentHighWaterMark = this.results.maxBankroll;
-      const stopLossFloor = currentHighWaterMark - maxAllowedDrawdownQuantum;
-      let stopLossTriggered = false;
-      // let stopLossReason = ""; // Uncomment if detailed console logging is desired
-
-      // Condition 1: Bet itself is larger than the allowed drawdown quantum.
-      if (betAmount > maxAllowedDrawdownQuantum) {
-          stopLossTriggered = true;
-          // stopLossReason = `Bet amount $${betAmount.toFixed(2)} > MaxDrawdownQuantum $${maxAllowedDrawdownQuantum.toFixed(2)}.`;
-      // Condition 2: Bet would cause bankroll to drop below the floor (HWM - drawdown quantum).
-      } else if ((bankroll - betAmount) < stopLossFloor) {
-          stopLossTriggered = true;
-          // stopLossReason = `Potential bankroll $${(bankroll - betAmount).toFixed(2)} < StopLossFloor $${stopLossFloor.toFixed(2)} (HWM $${currentHighWaterMark.toFixed(2)} - MaxDrawdownQuantum $${maxAllowedDrawdownQuantum.toFixed(2)}).`;
-      }
-      
-      if (stopLossTriggered) {
-        // console.log(`Stop-loss triggered. Current bankroll: $${bankroll.toFixed(2)}. ${stopLossReason} Aborting pattern.`);
-        break; // Abort this simulation / pattern
-      }
-      // END: New Stop-Loss Logic
-
-      // Original bankruptcy check: if the bet itself is larger than current bankroll
-      if (betAmount > bankroll) {
-        // console.log(`Bankrupt or cannot afford bet: Bankroll $${bankroll.toFixed(2)}, Bet $${betAmount.toFixed(2)}. Stopping simulation.`);
-        break; 
-      }
-
-      // --- Proceed with the bet ---
       bankroll -= betAmount;
       this.results.betsPlaced++;
-      betState.lastBet = betAmount; // Update betState after checks and before processing result
+      betState.lastBet = betAmount;
 
       const hand = this.gameEngine.dealGame();
       const result = this.gameEngine.resultsEngine.calculateGameResult(hand);
@@ -139,54 +107,27 @@ class BettingPatternAnalyzer {
         wonBet = true;
         bankroll += (betOn === 'banker') ? (betAmount * 1.95) : (betAmount * 2);
       } else if (result.outcome === 'tie') {
-        // Bet is returned on a tie
         bankroll += betAmount;
       }
-      // If lost, bankroll remains as (bankroll - betAmount)
 
-      // Update betState based on win/loss/tie (for next bet calculation)
       if (wonBet) {
         betState.consecutiveWins++;
         betState.consecutiveLosses = 0;
-      } else if (result.outcome !== 'tie') { // Loss (not a win, not a tie)
+      } else if (result.outcome !== 'tie') { // Loss
         betState.consecutiveLosses++;
         betState.consecutiveWins = 0;
         if (betState.consecutiveLosses > this.results.maxConsecutiveLosses) {
           this.results.maxConsecutiveLosses = betState.consecutiveLosses;
         }
       }
-      // On a tie, consecutive counts don't typically reset for common systems; bet is pushed.
-      // Individual strategy functions might handle ties specifically if needed.
       
-      // Update High Water Mark (maxBankroll) and minBankroll
-      // This must be done *after* the bankroll is updated from the game's result.
-      if (bankroll > this.results.maxBankroll) {
-        this.results.maxBankroll = bankroll;
-      }
-      if (bankroll < this.results.minBankroll) {
-        this.results.minBankroll = bankroll;
-      }
+      if (bankroll > this.results.maxBankroll) this.results.maxBankroll = bankroll;
+      if (bankroll < this.results.minBankroll) this.results.minBankroll = bankroll;
       
-      // Check for actual bankruptcy after bet outcome
-      if (bankroll <= 0) {
-        // console.log(`Bankrupted after game. Ending bankroll: $${bankroll.toFixed(2)}.`);
-        break;
-      }
+      if (bankroll <= 0) break;
     }
 
-    // Standardize final currency values to two decimal places
-    this.results.endingBankroll = parseFloat(bankroll.toFixed(2));
-    if (typeof this.results.maxBankroll === 'number') {
-        this.results.maxBankroll = parseFloat(this.results.maxBankroll.toFixed(2));
-    }
-    if (typeof this.results.minBankroll === 'number') {
-        this.results.minBankroll = parseFloat(this.results.minBankroll.toFixed(2));
-    }
-    if (typeof this.results.largestBet === 'number' && this.results.largestBet > 0) { // ensure largestBet is also formatted if it was set
-        this.results.largestBet = parseFloat(this.results.largestBet.toFixed(2));
-    }
-
-
+    this.results.endingBankroll = bankroll;
     return this.results;
   }
 
@@ -405,14 +346,14 @@ class BettingPatternAnalyzer {
    */
   static labouchereStrategy(baseBetParam = 1, initialSequenceParam = [1, 2, 3]) {
     const baseBet = baseBetParam;
-    const initialSequence = [...initialSequenceParam]; // Ensure we work with a copy
+    const initialSequence = [...initialSequenceParam];
 
     return (state) => {
-      if (!state.labouchereSequence || !Array.isArray(state.labouchereSequence)) { // Initialize or re-initialize if cleared
+      if (!state.labouchereSequence) {
         state.labouchereSequence = [...initialSequence];
       }
 
-      if (state.previousResults.length > 0 && typeof state.lastBet === 'number' && state.lastBet > 0) { // Process previous bet result
+      if (state.previousResults.length > 0) {
         const lastOutcome = state.previousResults[state.previousResults.length - 1];
         const previousBetWasOn = state.betOn;
 
@@ -421,9 +362,9 @@ class BettingPatternAnalyzer {
             if (state.labouchereSequence.length > 0) state.labouchereSequence.shift();
             if (state.labouchereSequence.length > 0) state.labouchereSequence.pop();
           } else { // LOSS
-            if (baseBet > 0) { // Avoid division by zero if baseBet is not set or is 0
-              const lastBetUnits = Math.round(state.lastBet / baseBet); // lastBet was in currency, convert to units
-              if (lastBetUnits > 0) { // Only add if it's a valid unit amount
+            if (state.lastBet > 0 && baseBet > 0) {
+              const lastBetUnits = Math.round(state.lastBet / baseBet);
+              if (lastBetUnits > 0) {
                 state.labouchereSequence.push(lastBetUnits);
               }
             }
@@ -431,21 +372,19 @@ class BettingPatternAnalyzer {
         }
       }
       
-      // If sequence is empty (all numbers cancelled or started empty), reset it.
       if (state.labouchereSequence.length === 0) {
         state.labouchereSequence = [...initialSequence];
-        // If initialSequence was also empty (or became empty due to config), can't bet.
-        if (state.labouchereSequence.length === 0) return 0; 
+        if (state.labouchereSequence.length === 0) return 0;
       }
       
       let currentBetUnits;
       if (state.labouchereSequence.length === 1) {
         currentBetUnits = state.labouchereSequence[0];
-      } else { // Length > 1
+      } else { 
         currentBetUnits = state.labouchereSequence[0] + state.labouchereSequence[state.labouchereSequence.length - 1];
       }
       
-      return currentBetUnits * baseBet; // Return bet in currency
+      return currentBetUnits * baseBet;
     };
   }
 }
