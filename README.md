@@ -11,7 +11,7 @@ Installation from source to your development machine is quite easy and should on
 ```bash
 * npm install
 ```
-
+(or you can just use docker instead to simplfy setup)
 ## An explanation of punto banco baccarat
 
 _Credit to [Wikipedia](<https://en.wikipedia.org/wiki/Baccarat_(card*game)#Punto_banco>).*
