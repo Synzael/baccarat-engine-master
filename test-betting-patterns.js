@@ -55,6 +55,10 @@ function runSimulation(strategyName, analyzer, betFunction, options = {}) {
   console.log(`Net profit/loss: $${netProfit > 0 ? '+' : ''}${formatNumber(netProfit)}`);
   console.log(`Maximum bankroll: $${formatNumber(results.maxBankroll)}`);
   console.log(`Minimum bankroll: $${formatNumber(results.minBankroll)}`);
+
+  if (results.losingStreaksOver5 && Object.keys(results.losingStreaksOver5).length > 0) {
+    console.log(`Losing streaks over 5 hands: ${JSON.stringify(results.losingStreaksOver5)}`);
+  }
   
   return results;
 }
@@ -169,7 +173,12 @@ if (strategyNames.length > 0) {
       const returnPercentage = result.startingBankroll !== 0 ? (result.endingBankroll / result.startingBankroll * 100).toFixed(2) : 'N/A';
       const netReturn = result.endingBankroll - result.startingBankroll;
       
-      console.log(`${strategyName}: Ended with $${formatNumber(result.endingBankroll)} (${returnPercentage}%), Net: $${netReturn > 0 ? '+' : ''}${formatNumber(netReturn)}`);
+      let streakInfo = '';
+      if (result.losingStreaksOver5 && Object.keys(result.losingStreaksOver5).length > 0) {
+        streakInfo = ` | Streaks >5: ${JSON.stringify(result.losingStreaksOver5)}`;
+      }
+
+      console.log(`${strategyName}: Ended with $${formatNumber(result.endingBankroll)} (${returnPercentage}%), Net: $${netReturn > 0 ? '+' : ''}${formatNumber(netReturn)}${streakInfo}`);
     }
 
     const bestStrategyName = strategyNames[0]; // Already sorted
